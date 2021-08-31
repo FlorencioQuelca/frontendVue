@@ -1,10 +1,15 @@
 <template>
-$END$
+ <v-card
+    class="">
+
+
+
+ </v-card>
 </template>
 
 <script>
 export default {
-name: "EmpresaForm"
+  name: "EmpresaForm"
 }
 </script>
 
