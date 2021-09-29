@@ -1,10 +1,8 @@
 <template>
    <div >
-
      <v-row
          align="center"
          justify="center"
-
      >
        <v-img
            :src="require('../assets/agua.png')"
@@ -12,8 +10,6 @@
            max-height="800"
        >
        </v-img>
-
-
        </v-row>
      <v-row align="center"
      justify="center">

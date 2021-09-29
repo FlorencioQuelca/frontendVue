@@ -5,11 +5,11 @@
   >
     <v-card-title>
       <h4>
-        {{proyecto.id}}
+        {{proyecto.codigo}}
       </h4>
       <v-spacer>
 
-      </v-spacer>
+      </v-spacer> 
          <v-btn
           color="green"
           text
@@ -24,23 +24,25 @@
     <v-divider/>
     <div >
       <v-chip  class="ma-2"
-               color="primary"> nombre completo
+               color="primary">   {{proyecto.nombre}}
          </v-chip>
 
       <v-chip class="ma-2"
-              color="secondary"> fecha </v-chip>
+              color="secondary"> {{proyecto.fecha}} </v-chip>
 
       <v-chip class="ma-2"
               color="red"
-              text-color="white">hora</v-chip>
+              text-color="white">{{proyecto.hora}}</v-chip>
 
       <v-chip class="ma-2"
               color="green"
-              text-color="white">costo ref.</v-chip>
-      <v-chip class="ma-2" >dias.</v-chip>
+              text-color="white">{{proyecto.precio}}</v-chip>
+      <v-chip class="ma-2"
+              color="orange"
+              text-color="white">{{proyecto.plazoEntrega}}</v-chip>
       <v-chip class="ma-2"
               color="red"
-              text-color="white">link</v-chip>
+              text-color="white">{{proyecto.link}}</v-chip>
 
 
     </div>

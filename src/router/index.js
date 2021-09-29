@@ -26,9 +26,13 @@ const routes = [
     path: '/empresas',
     name: 'Empresas',
     component: () => import( '../views/Empresas.vue')
-  }
+  },
+  {
+    path: '/Sociedades',
+    name: 'Sociedades',
+    component: () => import( '../views/Sociedades.vue')
+  },
 ]
-
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

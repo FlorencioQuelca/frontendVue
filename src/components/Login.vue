@@ -21,7 +21,7 @@
         style="margin-left: 100px">
       <v-radio
           value="uno"
-          label="Persona Natural o Consulor"
+          label="Persona Natural o Consu lor"
       ></v-radio>
       <v-radio
           value="dos"
