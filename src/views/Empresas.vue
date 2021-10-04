@@ -1,100 +1,109 @@
 <template>
-  <v-card outlined :loading="loading">
+  <v-card 
+   outlined
+   :loading="loading"
+   >
     <v-card-title>
-      <h3>EMPRESAS : </h3>
-      <v-spacer />
-      <v-radio-group style="margin-left: 100px" row>
-        <v-radio value="uno" label="Vigentes"></v-radio>
-        <v-radio value="dos" label="Todos"></v-radio>
-      </v-radio-group>
-      <v-select
-        v-model="select"
-        :hint="`${select.state}, ${select.abbr}`"
-        :items="items"
-        item-text="state"
-        item-value="abbr"
-        label="Select"
-        persistent-hint
-        return-object
-        single-line
-      ></v-select>
-
-      <v-btn outlined color="green"> BUSCAR </v-btn>
+      EMPRESAS       <v-spacer />
+      <v-btn  
+          @click="dialog = !dialog"
+      > <span class="mr-2">NUEVA : EMPRESA</span></v-btn>
     </v-card-title>
     <v-divider />
-
     <v-card-text>
       <v-row>
-        <v-col> </v-col>
-      </v-row>
-      <v-row style="margin-top: -40px">
-        <v-col
-          cols="12"
-          md="12"
-          sm="12"
-          v-for="(row, index) in proyectosl"
-          :key="index"
-        >
-          <Proyecto></Proyecto>
+        <v-col cols="10" md="10" sm="12">
+          <v-text-field
+            v-model ="txtBuscar"
+            label="Buscar por nombre N.I.T."
+            outlined
+            dense
+            @change="getEmpresas"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="2" md="2" sm="12">
+          <v-btn color="primary" @click="getEmpresas"
+          > Buscar </v-btn>
         </v-col>
       </v-row>
+      
+     
+      <v-row style="margin-top: -30px">
+        <v-col
+          cols="12"
+          md="6"
+          sm="6"
+          v-for="(row, index) in empresas"
+          :key="index"
+        >
+          <Empresa :empre ="row"
+            @actualizar="getEmpresas" 
+         />
+        </v-col>
+      </v-row>
+      <v-dialog v-model="dialog" max-width="850" persistent>
+           <NEEmpresa  @salir="salir"  @listar="getEmpresas" />
+       </v-dialog>
+       
     </v-card-text>
+    
   </v-card>
+  
+
 </template>
 
 <script>
-import Proyecto from "../components/Proyecto";
-import { mapState } from "vuex";
+import { mapState } from 'vuex';
+import Empresa from "../components/Empresa";
+import NEEmpresa from "../components/Empresa_form";
 
 export default {
+  components: { Empresa,NEEmpresa },
   name: "Empresas",
-  components: { Proyecto },
-  data: () => ({
-    select: { state: "LA PAZ", abbr: "Lp" },
-    items: [
-      { state: "LA PAZ", abbr: "Lp" },
-      { state: "Cochabamba", abbr: "Cbba" },
-      { state: "Santa Cruz", abbr: "Sc" },
-      { state: "Potosi", abbr: "Pt" },
-      { state: "Oruro", abbr: "Or" },
-      { state: "Tarija", abbr: "Tr" },
-      { state: "Pando", abbr: "Pd" },
-      { state: "Beni", abbr: "Bn" },
-      { state: "Chuquisaca", abbr: "Ch" },
-    ],
 
-    proyectosl: [],
+  data: () => ({
+    select: { state: "MASCULINO", abbr: "M" },
+    genero: [
+      { state: "MASCULINO",abbr: "M" },
+      { state: "FEMENINO" ,abbr: "F"},
+    ],
+    empresas: [],
+    dialog: false,
     loading: false,
+    txtBuscar: ""
   }),
-  computed: {
-    ...mapState(["url"]),
+  computed:{
+    ...mapState(['url'])
   },
-  mounted() {
-    this.getEmpresas();
+  mounted(){
+    this.getEmpresas()
   },
   methods: {
-    getEmpresas: function () {
-      this.loading = true;
-      //var hoy = new Date();
-      const url = this.url + "personas";
-      this.axios
-        .get(url, {
-          params: {
-            //  hora: hoy.getHours()+':'+hoy.getMinutes()+':'+hoy.getSeconds(),
-            // fecha: hoy.getFullYear()+'-'+(hoy.getMonth()+1)+'-'+hoy.getDay(),
-            // departamento: this.select.state,
-          },
-        })
-        .then((response) => {
-          //todo lo que trae del backend
-          console.log(response.data);
-          this.proyectosl = response.data;
-          this.loading = false;
-        });
+      salir() {
+      this.dialog = false;
     },
-  },
+    getEmpresas(){
+      
+       this.loading =true;
+      const url = this.url+"empresas"+"?txtBuscar="+this.txtBuscar ;   
+      this.axios.get(url).then(response =>{
+        // todo lo que trae el backend
+        if (response.data.length ===0)
+        {
+          this.$toastr.error("no encontrado");
+          this.loading = false;
+           this.empresas = response.data;
+        }else 
+        {
+        console.log(response.data);
+          if (response.data.length ===1 && this.txtBuscar!="")
+                          this.$toastr.success("encontrado");
+        this.empresas = response.data;
+        this.loading = false;
+        }
+      })
+    }
+
+  }
 };
 </script>
-
-<style scoped>
-</style>

@@ -10,7 +10,7 @@
     <v-toolbar color="pink" dark dense flat>
       
       <v-toolbar-title class="text-body-3">
-          <h3>{{ isNew ? "Crear nuevo" : "Actualizar datos" }} consultor o supervisor</h3>
+          <h3>{{ isNew ? "Registrar nueva" : "Actualizar datos de " }} Empresa</h3>
       </v-toolbar-title>
        <v-spacer/>
           <v-btn  color="white" @click="salir" outlined>
@@ -26,79 +26,51 @@
         ></errores>
         <v-container style="margin-bottom: -30px; margin-top: -20px">
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="4">
               <v-text-field
-                v-model="consultor.ci"
-                label="Cedula de Identidad * (Ejemplo: 5775077-1D)"
+                v-model="empresa1.nit"
+                label="N.I.T. * (Ejemplo: 5775077013)"
                 required
-                type="text"
+                type="number"
                 :rules="[
-                    (v) => !!v || 'Cedula de Indentidad requerida',
+                    (v) => !!v || 'nit requerido',
                     v => (v && v.length >= 1  && v.length <=11) || 'Cantidad de Caracteres invalido',
                 ]"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6">
+            <v-col cols="12" md="8">
               <v-text-field
-                v-model="consultor.nit"
-                label="N.I.T. (Ejemplo: 5775077013)"
-                type="number"
+                v-model="empresa1.nombreEmpresa"
+                label="NOMBRE DE LA EMPRESA * (Ejemplo: ABC CONSULTORES)"
+                type="text"
                 :rules="[
-                    (v) => !!v || 'nit de Indentidad requerida',
+                    (v) => !!v || 'nombre requerido',
                 ]"
                  
               ></v-text-field>
             </v-col>
           </v-row>
+
           <v-row style="margin-top: -20px">
-            <v-col cols="12" md="4">
+              <v-spacer/>
+            <v-col cols="12" md="8">
               <v-text-field
-                v-model="consultor.paterno"
-                label="Apellido Paterno *"
+                v-model="empresa1.nombreLegal"
+                label="Nombre completo Representante Legal *"
                 required
                 :rules="[
-                    (v) => !!v || 'Apellido Paterno Requerido',
-                    v => (v && v.length >= 3  && v.length <=25) || 'Cantidad de caracteres invalido',
-                    v => (v || '').indexOf(' ') < 0 ||  'no se permite spacios en blanco'
+                    (v) => !!v || 'Nombre completo representante legal Requerido',
+                    v => (v && v.length >= 3  && v.length <=100) || 'Cantidad de caracteres invalido',
                 ]"
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="consultor.materno"
-                label="Apellido Materno"
-                type="text"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="consultor.nombres"
-                label="Nombres *"
-                type="text"
-              
-                :rules="[
-                    (v) => !!v || 'Nombre requerido',
-                    v => (v && v.length >= 2  && v.length <=35) || 'Cantidad de caracteres invalido',
-                   ]"
-              ></v-text-field>
-            </v-col>
+         
           </v-row>
           <v-row style="margin-top: -20px">
+           
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="consultor.fechaNacimiento"
-                label="Fecha Nacimiento *"
-                type="Date"
-                outlined
-                shaped
-                :rules="[
-                    (v) => !!v || 'fecha de Nacimiento requerido',      
-                ]"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="consultor.fono1"
+                v-model="empresa1.fono1"
                 label="Telefono o Celular 1 *" 
                 type="number"
                 required
@@ -110,16 +82,14 @@
             </v-col>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="consultor.fono2"
+                v-model="empresa1.fono2"
                 label="Telefono/Celular 2"
                 type="number"
               ></v-text-field>
             </v-col>
-          </v-row>
-          <v-row style="margin-top: -20px">
-            <v-col cols="12" md="4">
+             <v-col cols="12" md="4">
               <v-text-field
-                v-model="consultor.email"
+                v-model="empresa1.email"
                 label="Correo Electronico *"
                 type="email"
                 :rules="[
@@ -130,30 +100,24 @@
                 ]"
               ></v-text-field>
             </v-col>
+          </v-row>
+
+          <v-row style="margin-top: -20px">
+            
             <v-col cols="12" md="4">
               <v-select
-                v-model="consultor.grado"
-                label="Grado Academico"
+                v-model="empresa1.departamento"
+                label="Departamento"
                 type="text"
                 :items="items1"
-                :rules="[v => !!v || 'Grado academico es requerido']"
+                :rules="[v => !!v || 'Departamento es requerido']"
               ></v-select>
             </v-col>
-            <v-col cols="12" md="4">
-              <v-select
-                v-model="consultor.genero"
-                label="Genero *"
-                type="text"
-                required
-                :items="items"
-                :rules="[v => !!v || 'Genero is requiredo']"
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row style="margin-top: -20px">
-            <v-col cols="12" md="12">
+            
+      
+            <v-col cols="12" md="8">
               <v-text-field
-                v-model="consultor.direccion"
+                v-model="empresa1.direccion"
                 label="Direccion Domiciliaria *"
                 type="text"
                 :rules="[
@@ -187,11 +151,11 @@ import { mapState } from "vuex";
 import errores from './errores.vue';
 export default {
   components: { errores },
-  name: "Persona_form",
-  props: ["persona"],
+  name: "Empresa_form",
+  props: ["empresa"],
   data: () => ({
     isNew: true,
-    consultor: {  genero: null,
+    empresa1: {  genero: null,
                   nombres:null,
                   paterno:null,
                   materno:null,
@@ -210,25 +174,27 @@ export default {
         'femenino',
       ],
       items1: [
-        'Lic.',
-        'Ing.',
-        'Abg.',
-        'Dipl.',
-        'Phd.',
-        'Med.',
-        'MSc.',
+        'LA PAZ',
+        'ORURO.',
+        'POTOSI',
+        'COCHABAMBA',
+        'SANTA CRUZ',
+        'TARIJA',
+        'PANDO',
+        'BENI',
+        'CHUQUISACA',
       ],
   }),
   computed: {
     ...mapState(["url"]),
   },
   created() {
-    if (this.persona == null) 
+    if (this.empresa == null) 
         this.isNew = true;
     else this.isNew = false;
   },
   mounted() {
-    if (!this.isNew) this.getPersona();
+    if (!this.isNew) this.getEmpresa();
   },
   methods: {
     salir() {
@@ -237,31 +203,28 @@ export default {
      listar() {
       this.$emit("listar");
     },
-    getPersona() {
+    getEmpresa() {
 
-      const url = this.url + "personas/" + this.persona.id;
+      const url = this.url + "empresas/" + this.empresa.id;
       this.axios.get(url).then((response) => {
        
         // console.log(response.data);
-         this.consultor = response.data;
+         this.empresa1 = response.data;
                     
       });
     },
     save() {
       if (!this.$refs.form.validate())
              return;
-       
-         
-     this.consultor.datosp = this.consultor.nombres+" "+this.consultor.paterno+" "+ this.consultor.materno;
       let url = "";
       this.errores =null;
-      if (this.isNew) url = this.url + "personas/";
-      else url = this.url + "personas/" + this.persona.id;
+      if (this.isNew) url = this.url + "empresas/";
+      else url = this.url + "empresas/" + this.empresa.id;
       this.loading = true;
       this.axios({
         method: this.isNew ? "POST" : "PUT",
         url: url,
-        data: this.consultor,
+        data: this.empresa1,
       })
         .then((response) => {
           if (response.data.res === true ) {

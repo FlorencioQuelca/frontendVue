@@ -3,33 +3,33 @@
     <v-toolbar color="pink" dark dense flat>
       <v-toolbar-title class="text-body-3">
         <v-icon>mdi-card-account-details</v-icon>
-        {{ consultor.ci }} | {{ consultor.datosp }}
+         {{ empre.nombreEmpresa }}
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text>
       <v-list class="transparent" style="margin-bottom: -20px">
         <v-list-item style="margin-bottom: -20px">
           <v-list-item-icon>
-            <v-icon>mdi-school</v-icon>
+            <v-icon>mdi-card-account-details</v-icon>
           </v-list-item-icon>
           <v-list-item-title class="text-left"
-            >GRADO ACADÉMICO:
+            >N.I.T. :
           </v-list-item-title>
           <v-list-item-subtitle class="text-left">
-            {{ consultor.grado }}
+            {{ empre.nit }}
           </v-list-item-subtitle>
         </v-list-item>
 
         <v-list-item style="margin-bottom: -20px">
           <v-list-item-icon>
-            <v-icon>mdi-calendar-range</v-icon>
+            <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
           <v-list-item-title class="text-left"
-            >FECHA DE NACIMIENTO:
+            >REPRESENTANTE LEGAL :
           </v-list-item-title>
           <v-spacer />
           <v-list-item-subtitle class="text-left">
-            {{ consultor.fechaNacimiento }}
+            {{ empre.nombreLegal }}
           </v-list-item-subtitle>
         </v-list-item>
 
@@ -42,7 +42,7 @@
           </v-list-item-title>
           <v-spacer />
           <v-list-item-subtitle class="text-left">
-            {{ consultor.fono1 }}
+            {{ empre.fono1 }}
           </v-list-item-subtitle>
         </v-list-item>
 
@@ -55,7 +55,7 @@
           </v-list-item-title>
           <v-spacer />
           <v-list-item-subtitle class="text-left">
-            {{ consultor.fono2 }}
+            {{ empre.fono2 }}
           </v-list-item-subtitle>
         </v-list-item>
 
@@ -68,7 +68,17 @@
           </v-list-item-title>
           <v-spacer />
           <v-list-item-subtitle class="text-left">
-            {{ consultor.email }}
+            {{ empre.email }}
+          </v-list-item-subtitle>
+        </v-list-item>
+  <v-list-item style="margin-bottom: -20px"> 
+          <v-list-item-icon>
+            <v-icon>mdi-city</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title class="text-left"> CIUDAD: </v-list-item-title>
+          <v-spacer />
+          <v-list-item-subtitle class="text-left">
+            {{ empre.departamento }}
           </v-list-item-subtitle>
         </v-list-item>
 
@@ -79,30 +89,11 @@
           <v-list-item-title class="text-left">DIRECCION: </v-list-item-title>
           <v-spacer />
           <v-list-item-subtitle class="text-left">
-            {{ consultor.direccion }}
+            {{ empre.direccion }}
           </v-list-item-subtitle>
         </v-list-item>
 
-        <v-list-item style="margin-bottom: -20px">
-          <v-list-item-icon>
-            <v-icon>mdi-card-account-details</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title class="text-left">N.I.T. : </v-list-item-title>
-          <v-spacer />
-          <v-list-item-subtitle class="text-left">
-            {{ consultor.nit }}
-          </v-list-item-subtitle>
-        </v-list-item>
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>mdi-gender-male-female</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title class="text-left">GENERO : </v-list-item-title>
-          <v-spacer />
-          <v-list-item-subtitle class="text-left">
-            {{ consultor.genero }}
-          </v-list-item-subtitle>
-        </v-list-item>
+        
       </v-list>
     </v-card-text>
 
@@ -117,8 +108,8 @@
     </v-card-subtitle>
 
     <v-dialog v-model="dialog" max-width="850" persistent>
-      <NEPersona
-        :persona="consultor"
+      <NEEmpresa
+        :empresa="empre"
         @salir="salir"
         @listar="$emit('actualizar')"
       />
@@ -127,33 +118,14 @@
 </template>
 
 <script>
-import NEPersona from "../components/Persona_form";
+import NEEmpresa from "../components/Empresa_form";
 export default {
-  name: "Persona",
-  components: { NEPersona },
-  props: ["consultor"],
+  name: "Empresa",
+  components: { NEEmpresa },
+  props: ["empre"],
   data: () => ({
     dialog: false,
-    forecast: [
-      {
-        day: "Grado. Academico :",
-        icon: "mdi-school",
-        temp: "consultor.grado",
-      },
-      {
-        day: "Fecha Nac.:",
-        icon: "mdi-calendar-range",
-        temp: "fechaNacimiento",
-      },
-      { day: "Telefono/Celular 1 :", icon: "mdi-phone", temp: "fono1" },
-      { day: "Telefono/Celular 2 :", icon: "mdi-phone", temp: "fono2" },
-      { day: "Email :", icon: "mdi-email", temp: "email" },
-      { day: "Direccion :", icon: "mdi-map-marker", temp: "direccion" },
-      { day: "Nit :", icon: "mdi-card-account-details", temp: "nit" },
-      { day: "Genero :", icon: "mdi-gender-male-female", temp: "genero" },
-    ],
   }),
-
   methods: {
     salir() {
       this.dialog = false;
