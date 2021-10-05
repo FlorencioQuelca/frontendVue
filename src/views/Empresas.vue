@@ -62,12 +62,7 @@ export default {
   name: "Empresas",
 
   data: () => ({
-    select: { state: "MASCULINO", abbr: "M" },
-    genero: [
-      { state: "MASCULINO",abbr: "M" },
-      { state: "FEMENINO" ,abbr: "F"},
-    ],
-    empresas: [],
+       empresas: [],
     dialog: false,
     loading: false,
     txtBuscar: ""

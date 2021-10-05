@@ -10,7 +10,7 @@
     <v-toolbar color="pink" dark dense flat>
       
       <v-toolbar-title class="text-body-3">
-          <h3>{{ isNew ? "Registrar nueva" : "Actualizar datos de " }} Empresa</h3>
+          <h3>{{ isNew ? "Registrar nueva" : "Actualizar datos de " }} ASOCIACION ACCIDENTAL </h3>
       </v-toolbar-title>
        <v-spacer/>
           <v-btn  color="white" @click="salir" outlined>
@@ -29,7 +29,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="empresa1.nit"
-                label="N.I.T. * (Ejemplo: 5775077013)"
+                label="codigo Interno * (Ejemplo: 220210001)"
                 required
                 type="number"
                 :rules="[
@@ -40,8 +40,8 @@
             </v-col>
             <v-col cols="12" md="8">
               <v-text-field
-                v-model="empresa1.nombreEmpresa"
-                label="NOMBRE DE LA EMPRESA * (Ejemplo: ABC CONSULTORES)"
+                v-model="empresa1.nombre"
+                label="Nombre de la asociacion accidental "
                 type="text"
                 :rules="[
                     (v) => !!v || 'nombre requerido',
@@ -118,13 +118,13 @@
       
             <v-col cols="12" md="8">
               <v-text-field
-                v-model="empresa1.direccion"
+                v-model="empresa1.observacion"
                 label="Direccion Domiciliaria *"
 
 
                 :rules="[
                     v => !!v || 'direccion domiciliaria requerido',
-                    v => (v && v.length >= 5  && v.length <=100) || 'Cantidad de caracteres invalido',
+                  
                 ]"
               ></v-text-field>
             </v-col>
@@ -153,7 +153,7 @@ import { mapState } from "vuex";
 import errores from './errores.vue';
 export default {
   components: { errores },
-  name: "Empresa_form",
+  name: "Sociedad_form",
   props: ["empresa"],
   data: () => ({
     isNew: true,
@@ -195,7 +195,7 @@ export default {
     },
     getEmpresa() {
 
-      const url = this.url + "empresas/" + this.empresa.id;
+      const url = this.url + "sociedadAccidentals/" + this.empresa.id;
       this.axios.get(url).then((response) => {
        
         // console.log(response.data);
@@ -209,12 +209,12 @@ export default {
       let url = "";
       this.errores =null;
      this.empresa1.nombreLegal= this.empresa1.nombreLegal.toUpperCase();
-     this.empresa1.nombreEmpresa= this.empresa1.nombreEmpresa.toUpperCase();
+     this.empresa1.nombre= this.empresa1.nombre.toUpperCase();
      this.empresa1.direccion= this.empresa1.direccion.toUpperCase();
      this.empresa1.email= this.empresa1.email.toLowerCase();
      
-      if (this.isNew) url = this.url + "empresas/";
-      else url = this.url + "empresas/" + this.empresa.id;
+      if (this.isNew) url = this.url + "sociedadAccidentals/";
+      else url = this.url + "sociedadAccidentals/" + this.empresa.id;
       this.loading = true;
       this.axios({
         method: this.isNew ? "POST" : "PUT",
